@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>אומנות באוויר</title>
+  <style>
+    @font-face {
+      font-family: 'DanaYadAlefAlefAlef-Normal';
+      src: url('fonts/DanaYadAlefAlefAlef-Normal.woff') format('woff'),
+           url('fonts/DanaYadAlefAlefAlef-Normal.otf') format('opentype'),
+           url('fonts/DanaYadAlefAlefAlef-Normal.eot');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    body {
+      background: #faf7f6;
+      font-family: 'DanaYadAlefAlefAlef-Normal', Arial, sans-serif;
+      color: #444;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(200, 180, 200, 0.12);
+      padding: 32px 24px 24px 24px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .balloon-img {
+      width: 180px;
+      margin-bottom: 24px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(200, 180, 200, 0.10);
+    }
+    h1 {
+      font-size: 2em;
+      margin: 0 0 12px 0;
+      color: #b48cae;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+    .intro {
+      font-size: 1.1em;
+      color: #6d6d6d;
+      margin: 12px 0 18px 0;
+      line-height: 1.7;
+    }
+    p {
+      font-size: 1.1em;
+      margin: 0 0 16px 0;
+      color: #888;
+    }
+    .phone {
+      font-size: 1.2em;
+      color: #6d6d6d;
+      background: #f3e9f6;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin-top: 8px;
+      letter-spacing: 1px;
+      direction: ltr;
+      font-family: 'DanaYadAlefAlefAlef-Normal', Arial, sans-serif;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .phone:hover, .phone:focus {
+      text-decoration: none;
+      color: #b48cae;
+    }
+    .arrows-nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 24px 0 0 0;
+    }
+    .arrow-label-group {
+      width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .arrow-label {
+      font-size: 1em;
+      color: #b48cae;
+      margin-top: 2px;
+      font-family: 'DanaYadAlefAlefAlef-Normal', Arial, sans-serif;
+      letter-spacing: 1px;
+      user-select: none;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .arrow-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.2s;
+    }
+    .arrow-btn:active {
+      transform: scale(0.92);
+    }
+    .arrow-btn svg {
+      display: block;
+    }
+    .products {
+      margin: 40px auto 0 auto;
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+    .product-section {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 2px 16px rgba(200, 180, 200, 0.10);
+      padding: 24px 16px 20px 16px;
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .product-section h2 {
+      color: #b48cae;
+      margin-bottom: 8px;
+      font-size: 1.4em;
+      font-weight: normal;
+    }
+    .product-section p {
+      color: #888;
+      margin-bottom: 18px;
+      font-size: 1em;
+    }
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .gallery img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: 0 1px 8px rgba(200, 180, 200, 0.10);
+      background: #f3e9f6;
+    }
+    .gallery-img {
+      cursor: pointer;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(30, 20, 40, 0.85);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.2s;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+      background: #fff;
+      padding: 8px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      font-size: 2.5em;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1001;
+      font-family: Arial, sans-serif;
+      user-select: none;
+    }
+    .social-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .instagram-link:hover, .instagram-link:focus {
+      opacity: 1;
+    }
+    .instagram-logo {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="assets/style.jpeg" alt="בלונים" class="balloon-img">
+    <h1>אומנות באוויר</h1>
+    <p class="intro">ברוכים הבאים לאומנות באוויר! כאן תמצאו יצירות ייחודיות מבלונים לאירועים, ימי הולדת ושמחות, וגם בובות קרושה בעבודת יד בהזמנה אישית. אני מזמינה אתכם להתרשם מהגלריות וליצור קשר לכל שאלה או הזמנה.</p>
+    <p>בלונים לכל שמחה</p>
+    <a class="phone" href="https://wa.me/972544864974" title="שלח הודעה בוואטסאפ">054-4864974</a>
+    <div class="social-links">
+      <a href="https://www.instagram.com/mayashemtov_airart" class="instagram-link" title="Instagram" target="_blank" rel="noopener">
+        <svg class="instagram-logo" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#fff"/>
+          <g opacity="0.8">
+            <path d="M22.5 9.5h-13A2 2 0 0 0 7.5 11.5v9A2 2 0 0 0 9.5 22.5h13a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-6.5 2.5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm6.25 1.25a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM16 13.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" fill="#b48cae"/>
+          </g>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="arrows-nav">
+    <div class="arrow-label-group">
+      <button class="arrow-btn" onclick="document.getElementById('balloons').scrollIntoView({behavior: 'smooth'});" aria-label="גלול לבלונים">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="18" fill="#f3e9f6"/>
+          <path d="M12 16l6 6 6-6" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="arrow-label">בלונים</div>
+    </div>
+    <div class="arrow-label-group">
+      <button class="arrow-btn" onclick="document.getElementById('dolls').scrollIntoView({behavior: 'smooth'});" aria-label="גלול לבובות">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="18" fill="#f3e9f6"/>
+          <path d="M12 16l6 6 6-6" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="arrow-label">בובות</div>
+    </div>
+    <div class="arrow-label-group">
+      <button class="arrow-btn" onclick="document.getElementById('creative-corner').scrollIntoView({behavior: 'smooth'});" aria-label="גלול לאביזרים לסריגה ורקמה">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="18" fill="#f3e9f6"/>
+          <path d="M12 16l6 6 6-6" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="arrow-label">אביזרים לסריגה ורקמה</div>
+    </div>
+  </div>
+  <div class="products">
+    <section class="product-section" id="balloons">
+      <h2>אומנות בבלונים</h2>
+      <p>גלריה של יצירות קודמות שלי בבלונים</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="בלון 1" class="gallery-img">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=300&q=80" alt="בלון 2" class="gallery-img">
+      </div>
+    </section>
+    <section class="product-section" id="dolls">
+      <h2>בובות קרושה בהזמנה אישית</h2>
+      <p>גלריה של בובות קרושה שאני יוצרת לפי הזמנה</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" alt="בובת קרושה 1" class="gallery-img">
+        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=300&q=80" alt="בובת קרושה 2" class="gallery-img">
+      </div>
+    </section>
+    <section class="product-section" id="creative-corner">
+      <h2>אביזרים לסריגה ורקמה</h2>
+      <p>מבחר אביזרים, חוטים, מחטים וציוד נלווה לסריגה ורקמה. כל מה שצריך כדי ליצור בנוחות ובכיף!</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80" alt="אביזרים לסריגה ורקמה 1" class="gallery-img">
+        <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=300&q=80" alt="אביזרים לסריגה ורקמה 2" class="gallery-img">
+      </div>
+    </section>
+  </div>
+  <div id="lightbox" class="lightbox" style="display:none">
+    <span class="lightbox-close" id="lightbox-close">×</span>
+    <img id="lightbox-img" src="" alt="תצוגה מלאה">
+  </div>
+  <script>
+    document.querySelectorAll('.gallery-img').forEach(img => {
+      img.addEventListener('click', function() {
+        document.getElementById('lightbox-img').src = this.src;
+        document.getElementById('lightbox').style.display = 'flex';
+      });
+    });
+    document.getElementById('lightbox-close').onclick = function() {
+      document.getElementById('lightbox').style.display = 'none';
+      document.getElementById('lightbox-img').src = '';
+    };
+    document.getElementById('lightbox').onclick = function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+        document.getElementById('lightbox-img').src = '';
+      }
+    };
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('lightbox').style.display = 'none';
+        document.getElementById('lightbox-img').src = '';
+      }
+    });
+  </script>
+</body>
+</html> 
