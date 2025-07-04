@@ -12,19 +12,28 @@ permissions:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
           path: example
+          token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.PRIVATE_GITHUB_TOKEN }} 
