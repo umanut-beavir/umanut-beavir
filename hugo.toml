@@ -1,4 +1,4 @@
 baseURL = 'https://avielb.github.io/example/'
 languageCode = 'en-us'
 title = 'My New Hugo Site'
-theme = "ananke"
+theme = "congo"
