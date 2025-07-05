@@ -330,6 +330,10 @@
       word-break: normal;
       hyphens: auto;
     }
+    .gallery-img, .balloon-img {
+      filter: brightness(1.04) contrast(1.03) saturate(1.08);
+      transition: filter 0.2s;
+    }
   </style>
 </head>
 <body>
@@ -392,8 +396,9 @@
       <h2>אומנות בבלונים</h2>
       <p>גלריה של יצירות קודמות שלי בבלונים</p>
       <div class="gallery">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="בלון 1" class="gallery-img">
-        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=300&q=80" alt="בלון 2" class="gallery-img">
+        <img src="../categories/balloons/images/balloon1.jpeg" alt="בלון 1" class="gallery-img">
+        <img src="../categories/balloons/images/balloon2.jpeg" alt="בלון 2" class="gallery-img">
+        <img src="../categories/balloons/images/balloon3.jpeg" alt="בלון 3" class="gallery-img">
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -408,8 +413,10 @@
       <h2>בובות קרושה בהזמנה אישית</h2>
       <p>גלריה של בובות קרושה שאני יוצרת לפי הזמנה</p>
       <div class="gallery">
-        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" alt="בובת קרושה 1" class="gallery-img">
-        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=300&q=80" alt="בובת קרושה 2" class="gallery-img">
+        <img src="../categories/dolls/images/doll1.jpg" alt="בובת קרושה 1" class="gallery-img">
+        <img src="../categories/dolls/images/doll2.jpg" alt="בובת קרושה 2" class="gallery-img">
+        <img src="../categories/dolls/images/doll3.jpg" alt="בובת קרושה 3" class="gallery-img">
+        <img src="../categories/dolls/images/doll4.jpeg" alt="בובת קרושה 4" class="gallery-img">
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -442,26 +449,48 @@
     <img id="lightbox-img" src="" alt="תצוגה מלאה">
   </div>
   <script>
-    document.querySelectorAll('.gallery-img').forEach(img => {
-      img.addEventListener('click', function() {
-        document.getElementById('lightbox-img').src = this.src;
-        document.getElementById('lightbox').style.display = 'flex';
+    let currentGalleryImages = [];
+    let currentImageIndex = -1;
+    document.querySelectorAll('.gallery').forEach(gallery => {
+      gallery.querySelectorAll('.gallery-img').forEach((img, idx, imgs) => {
+        img.addEventListener('click', function() {
+          currentGalleryImages = Array.from(gallery.querySelectorAll('.gallery-img'));
+          currentImageIndex = idx;
+          document.getElementById('lightbox-img').src = this.src;
+          document.getElementById('lightbox').style.display = 'flex';
+        });
       });
     });
     document.getElementById('lightbox-close').onclick = function() {
       document.getElementById('lightbox').style.display = 'none';
       document.getElementById('lightbox-img').src = '';
+      currentGalleryImages = [];
+      currentImageIndex = -1;
     };
     document.getElementById('lightbox').onclick = function(e) {
       if (e.target === this) {
         this.style.display = 'none';
         document.getElementById('lightbox-img').src = '';
+        currentGalleryImages = [];
+        currentImageIndex = -1;
       }
     };
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        document.getElementById('lightbox').style.display = 'none';
-        document.getElementById('lightbox-img').src = '';
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox.style.display === 'flex') {
+        if (e.key === 'Escape') {
+          lightbox.style.display = 'none';
+          document.getElementById('lightbox-img').src = '';
+          currentGalleryImages = [];
+          currentImageIndex = -1;
+        } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && currentGalleryImages.length > 0) {
+          if (e.key === 'ArrowLeft') {
+            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+          } else if (e.key === 'ArrowRight') {
+            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+          }
+          document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex].src;
+        }
       }
     });
   </script>
