@@ -51,7 +51,7 @@
     .divider {
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #b48cae, transparent);
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
       margin: 0 auto 24px auto;
       border-radius: 1px;
     }
@@ -204,18 +204,25 @@
     .gallery {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 8px;
       flex-wrap: wrap;
+      max-height: 200px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      width: fit-content;
+      margin: 0 auto;
     }
     .gallery-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
+      width: 140px;
+      flex-shrink: 0;
     }
     .gallery img {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       object-fit: cover;
       border-radius: 14px;
       box-shadow: 0 1px 8px rgba(200, 180, 200, 0.10);
@@ -231,6 +238,34 @@
     }
     .gallery-img {
       cursor: pointer;
+      transition: transform 0.1s ease, filter 0.1s ease;
+    }
+    .gallery-img:active {
+      transform: scale(0.95);
+      filter: brightness(0.9) contrast(1.05) saturate(1.1);
+    }
+    .gallery.expanded {
+      max-height: none;
+    }
+    .show-more-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-top: 12px;
+      transition: transform 0.2s;
+      opacity: 0.7;
+    }
+    .show-more-btn:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    .show-more-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    .show-more-btn.hidden {
+      display: none;
     }
     html {
       scroll-behavior: smooth;
@@ -438,6 +473,11 @@
           <img src="categories/balloons/images/balloon3.jpeg" alt="בלון 3" class="gallery-img">
         </div>
       </div>
+      <button class="show-more-btn" onclick="toggleGallery(this)" aria-label="הצג עוד בלונים">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 10l5 5 5-5" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
           <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -463,7 +503,21 @@
         <div class="gallery-item">
           <img src="categories/dolls/images/doll4.jpeg" alt="בובת קרושה 4" class="gallery-img">
         </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll5.jpg" alt="בובת קרושה 5" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll6.jpg" alt="בובת קרושה 6" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll7.jpg" alt="בובת קרושה 7" class="gallery-img">
+        </div>
       </div>
+      <button class="show-more-btn" onclick="toggleGallery(this)" aria-label="הצג עוד בובות">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 10l5 5 5-5" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
           <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -508,6 +562,11 @@
           <div class="gallery-description" style="display: none;">דפי ריקמה נמסים במים לרקמה נוחה וקלה</div>
         </div>
       </div>
+      <button class="show-more-btn" onclick="toggleGallery(this)" aria-label="הצג עוד מוצרים">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 10l5 5 5-5" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
           <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -597,6 +656,22 @@
         }
       }
     });
+
+    // Gallery expand/collapse functionality
+    function toggleGallery(button) {
+      const gallery = button.previousElementSibling;
+      const isExpanded = gallery.classList.contains('expanded');
+      
+      if (isExpanded) {
+        gallery.classList.remove('expanded');
+        button.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        button.setAttribute('aria-label', button.getAttribute('aria-label').replace('הסתר', 'הצג'));
+      } else {
+        gallery.classList.add('expanded');
+        button.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 14l5-5 5 5" stroke="#b48cae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        button.setAttribute('aria-label', button.getAttribute('aria-label').replace('הצג', 'הסתר'));
+      }
+    }
   </script>
 </body>
 </html> 
