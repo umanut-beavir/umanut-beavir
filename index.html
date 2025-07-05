@@ -207,6 +207,12 @@
       gap: 16px;
       flex-wrap: wrap;
     }
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
     .gallery img {
       width: 120px;
       height: 120px;
@@ -214,6 +220,14 @@
       border-radius: 14px;
       box-shadow: 0 1px 8px rgba(200, 180, 200, 0.10);
       background: #f3e9f6;
+    }
+    .gallery-title {
+      font-size: 0.9em;
+      color: #b48cae;
+      text-align: center;
+      font-weight: bold;
+      max-width: 120px;
+      line-height: 1.2;
     }
     .gallery-img {
       cursor: pointer;
@@ -253,6 +267,24 @@
       z-index: 1001;
       font-family: Arial, sans-serif;
       user-select: none;
+    }
+    .lightbox-title {
+      margin-top: 16px;
+      font-size: 1.6em;
+      color: #fff;
+      text-align: center;
+      font-weight: bold;
+      max-width: 80%;
+      word-break: break-word;
+    }
+    .lightbox-description {
+      margin-top: 12px;
+      font-size: 1.2em;
+      color: #e0e0e0;
+      text-align: center;
+      max-width: 80%;
+      word-break: break-word;
+      line-height: 1.4;
     }
 
     @media (max-width: 600px) {
@@ -339,7 +371,7 @@
 <body>
   <div class="container">
     <div class="upper-section">
-      <img src="assets/style.jpeg" alt="בלונים" class="balloon-img">
+      <img src="example/assets/style.jpeg" alt="בלונים" class="balloon-img">
     </div>
     <div class="divider"></div>
     <h1>ברוכים הבאים לאומנות באוויר!</h1>
@@ -396,9 +428,21 @@
       <h2>אומנות בבלונים</h2>
       <p>גלריה של יצירות קודמות שלי בבלונים</p>
       <div class="gallery">
-        <img src="categories/balloons/images/balloon1.jpeg" alt="בלון 1" class="gallery-img">
-        <img src="categories/balloons/images/balloon2.jpeg" alt="בלון 2" class="gallery-img">
-        <img src="categories/balloons/images/balloon3.jpeg" alt="בלון 3" class="gallery-img">
+        <div class="gallery-item">
+          <img src="categories/balloons/images/balloon1.jpeg" alt="בלון 1" class="gallery-img">
+          <div class="gallery-title">בלון 1</div>
+          <div class="gallery-description" style="display: none;">תיאור בלון 1</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/balloons/images/balloon2.jpeg" alt="בלון 2" class="gallery-img">
+          <div class="gallery-title">בלון 2</div>
+          <div class="gallery-description" style="display: none;">תיאור בלון 2</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/balloons/images/balloon3.jpeg" alt="בלון 3" class="gallery-img">
+          <div class="gallery-title">בלון 3</div>
+          <div class="gallery-description" style="display: none;">תיאור בלון 3</div>
+        </div>
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -413,10 +457,26 @@
       <h2>בובות קרושה בהזמנה אישית</h2>
       <p>גלריה של בובות קרושה שאני יוצרת לפי הזמנה</p>
       <div class="gallery">
-        <img src="categories/dolls/images/doll1.jpg" alt="בובת קרושה 1" class="gallery-img">
-        <img src="categories/dolls/images/doll2.jpg" alt="בובת קרושה 2" class="gallery-img">
-        <img src="categories/dolls/images/doll3.jpg" alt="בובת קרושה 3" class="gallery-img">
-        <img src="categories/dolls/images/doll4.jpeg" alt="בובת קרושה 4" class="gallery-img">
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll1.jpg" alt="בובת קרושה 1" class="gallery-img">
+          <div class="gallery-title">בובת קרושה 1</div>
+          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 1</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll2.jpg" alt="בובת קרושה 2" class="gallery-img">
+          <div class="gallery-title">בובת קרושה 2</div>
+          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 2</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll3.jpg" alt="בובת קרושה 3" class="gallery-img">
+          <div class="gallery-title">בובת קרושה 3</div>
+          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 3</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/dolls/images/doll4.jpeg" alt="בובת קרושה 4" class="gallery-img">
+          <div class="gallery-title">בובת קרושה 4</div>
+          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 4</div>
+        </div>
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -431,9 +491,21 @@
       <h2>אביזרים לסריגה ורקמה</h2>
       <p>מבחר אביזרים, חוטים, מחטים וציוד נלווה לסריגה ורקמה. כל מה שצריך כדי ליצור בנוחות ובכיף!</p>
       <div class="gallery">
-        <img src="categories/products/images/product1.webp" alt="אביזרים לסריגה ורקמה 1" class="gallery-img">
-        <img src="categories/products/images/product2.webp" alt="אביזרים לסריגה ורקמה 2" class="gallery-img">
-        <img src="categories/products/images/product3.webp" alt="אביזרים לסריגה ורקמה 3" class="gallery-img">
+        <div class="gallery-item">
+          <img src="categories/products/images/product1.webp" alt="לוח בלוקינג" class="gallery-img">
+          <div class="gallery-title">לוח בלוקינג</div>
+          <div class="gallery-description" style="display: none;">לוח בלוקינג איכותי לסריגה נוחה</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/products/images/product2.webp" alt="סימניות צמר" class="gallery-img">
+          <div class="gallery-title">סימניות צמר</div>
+          <div class="gallery-description" style="display: none;">סימניות צמר מעוצבות לסימון שורות</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/products/images/product3.webp" alt="מעצורים למסרגות" class="gallery-img">
+          <div class="gallery-title">מעצורים למסרגות</div>
+          <div class="gallery-description" style="display: none;">מעצורים למסרגות למניעת החלקה</div>
+        </div>
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -448,6 +520,8 @@
   <div id="lightbox" class="lightbox" style="display:none">
     <span class="lightbox-close" id="lightbox-close">×</span>
     <img id="lightbox-img" src="" alt="תצוגה מלאה">
+    <div id="lightbox-title" class="lightbox-title"></div>
+    <div id="lightbox-description" class="lightbox-description"></div>
   </div>
   <script>
     let currentGalleryImages = [];
@@ -458,6 +532,8 @@
           currentGalleryImages = Array.from(gallery.querySelectorAll('.gallery-img'));
           currentImageIndex = idx;
           document.getElementById('lightbox-img').src = this.src;
+          document.getElementById('lightbox-title').textContent = this.nextElementSibling.textContent; // Set title
+          document.getElementById('lightbox-description').textContent = this.nextElementSibling.nextElementSibling.textContent; // Set description
           document.getElementById('lightbox').style.display = 'flex';
         });
       });
@@ -465,6 +541,8 @@
     document.getElementById('lightbox-close').onclick = function() {
       document.getElementById('lightbox').style.display = 'none';
       document.getElementById('lightbox-img').src = '';
+      document.getElementById('lightbox-title').textContent = ''; // Clear title
+      document.getElementById('lightbox-description').textContent = ''; // Clear description
       currentGalleryImages = [];
       currentImageIndex = -1;
     };
@@ -472,6 +550,8 @@
       if (e.target === this) {
         this.style.display = 'none';
         document.getElementById('lightbox-img').src = '';
+        document.getElementById('lightbox-title').textContent = ''; // Clear title
+        document.getElementById('lightbox-description').textContent = ''; // Clear description
         currentGalleryImages = [];
         currentImageIndex = -1;
       }
@@ -482,6 +562,8 @@
         if (e.key === 'Escape') {
           lightbox.style.display = 'none';
           document.getElementById('lightbox-img').src = '';
+          document.getElementById('lightbox-title').textContent = ''; // Clear title
+          document.getElementById('lightbox-description').textContent = ''; // Clear description
           currentGalleryImages = [];
           currentImageIndex = -1;
         } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && currentGalleryImages.length > 0) {
@@ -491,6 +573,8 @@
             currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
           }
           document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex].src;
+          document.getElementById('lightbox-title').textContent = currentGalleryImages[currentImageIndex].nextElementSibling.textContent; // Update title
+          document.getElementById('lightbox-description').textContent = currentGalleryImages[currentImageIndex].nextElementSibling.nextElementSibling.textContent; // Update description
         }
       }
     });
