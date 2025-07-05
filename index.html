@@ -430,18 +430,12 @@
       <div class="gallery">
         <div class="gallery-item">
           <img src="categories/balloons/images/balloon1.jpeg" alt="בלון 1" class="gallery-img">
-          <div class="gallery-title">בלון 1</div>
-          <div class="gallery-description" style="display: none;">תיאור בלון 1</div>
         </div>
         <div class="gallery-item">
           <img src="categories/balloons/images/balloon2.jpeg" alt="בלון 2" class="gallery-img">
-          <div class="gallery-title">בלון 2</div>
-          <div class="gallery-description" style="display: none;">תיאור בלון 2</div>
         </div>
         <div class="gallery-item">
           <img src="categories/balloons/images/balloon3.jpeg" alt="בלון 3" class="gallery-img">
-          <div class="gallery-title">בלון 3</div>
-          <div class="gallery-description" style="display: none;">תיאור בלון 3</div>
         </div>
       </div>
       <div class="up-arrow-wrap">
@@ -459,23 +453,15 @@
       <div class="gallery">
         <div class="gallery-item">
           <img src="categories/dolls/images/doll1.jpg" alt="בובת קרושה 1" class="gallery-img">
-          <div class="gallery-title">בובת קרושה 1</div>
-          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 1</div>
         </div>
         <div class="gallery-item">
           <img src="categories/dolls/images/doll2.jpg" alt="בובת קרושה 2" class="gallery-img">
-          <div class="gallery-title">בובת קרושה 2</div>
-          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 2</div>
         </div>
         <div class="gallery-item">
           <img src="categories/dolls/images/doll3.jpg" alt="בובת קרושה 3" class="gallery-img">
-          <div class="gallery-title">בובת קרושה 3</div>
-          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 3</div>
         </div>
         <div class="gallery-item">
           <img src="categories/dolls/images/doll4.jpeg" alt="בובת קרושה 4" class="gallery-img">
-          <div class="gallery-title">בובת קרושה 4</div>
-          <div class="gallery-description" style="display: none;">תיאור בובת קרושה 4</div>
         </div>
       </div>
       <div class="up-arrow-wrap">
@@ -506,6 +492,16 @@
           <div class="gallery-title">מעצורים למסרגות</div>
           <div class="gallery-description" style="display: none;">מעצורים למסרגות למניעת החלקה</div>
         </div>
+        <div class="gallery-item">
+          <img src="categories/products/images/product4.webp" alt="תיק אחסון למסרגות" class="gallery-img">
+          <div class="gallery-title">תיק אחסון למסרגות</div>
+          <div class="gallery-description" style="display: none;">תיק אחסון מחולק לשמירה על סדר ומסרגות</div>
+        </div>
+        <div class="gallery-item">
+          <img src="categories/products/images/product5.webp" alt="נול סריגה צר" class="gallery-img">
+          <div class="gallery-title">נול סריגה צר</div>
+          <div class="gallery-description" style="display: none;">נול סריגה צר לאריגת צעיפים וחגורות</div>
+        </div>
       </div>
       <div class="up-arrow-wrap">
         <button class="arrow-btn up-arrow-btn" onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'});" aria-label="חזור למעלה">
@@ -532,8 +528,17 @@
           currentGalleryImages = Array.from(gallery.querySelectorAll('.gallery-img'));
           currentImageIndex = idx;
           document.getElementById('lightbox-img').src = this.src;
-          document.getElementById('lightbox-title').textContent = this.nextElementSibling.textContent; // Set title
-          document.getElementById('lightbox-description').textContent = this.nextElementSibling.nextElementSibling.textContent; // Set description
+          
+          // Get title if it exists
+          const titleElement = this.nextElementSibling;
+          const title = titleElement && titleElement.classList.contains('gallery-title') ? titleElement.textContent : '';
+          document.getElementById('lightbox-title').textContent = title;
+          
+          // Get description if it exists
+          const descriptionElement = titleElement ? titleElement.nextElementSibling : null;
+          const description = descriptionElement && descriptionElement.classList.contains('gallery-description') ? descriptionElement.textContent : '';
+          document.getElementById('lightbox-description').textContent = description;
+          
           document.getElementById('lightbox').style.display = 'flex';
         });
       });
@@ -541,8 +546,8 @@
     document.getElementById('lightbox-close').onclick = function() {
       document.getElementById('lightbox').style.display = 'none';
       document.getElementById('lightbox-img').src = '';
-      document.getElementById('lightbox-title').textContent = ''; // Clear title
-      document.getElementById('lightbox-description').textContent = ''; // Clear description
+      document.getElementById('lightbox-title').textContent = '';
+      document.getElementById('lightbox-description').textContent = '';
       currentGalleryImages = [];
       currentImageIndex = -1;
     };
@@ -550,8 +555,8 @@
       if (e.target === this) {
         this.style.display = 'none';
         document.getElementById('lightbox-img').src = '';
-        document.getElementById('lightbox-title').textContent = ''; // Clear title
-        document.getElementById('lightbox-description').textContent = ''; // Clear description
+        document.getElementById('lightbox-title').textContent = '';
+        document.getElementById('lightbox-description').textContent = '';
         currentGalleryImages = [];
         currentImageIndex = -1;
       }
@@ -562,8 +567,8 @@
         if (e.key === 'Escape') {
           lightbox.style.display = 'none';
           document.getElementById('lightbox-img').src = '';
-          document.getElementById('lightbox-title').textContent = ''; // Clear title
-          document.getElementById('lightbox-description').textContent = ''; // Clear description
+          document.getElementById('lightbox-title').textContent = '';
+          document.getElementById('lightbox-description').textContent = '';
           currentGalleryImages = [];
           currentImageIndex = -1;
         } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && currentGalleryImages.length > 0) {
@@ -572,9 +577,18 @@
           } else if (e.key === 'ArrowRight') {
             currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
           }
-          document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex].src;
-          document.getElementById('lightbox-title').textContent = currentGalleryImages[currentImageIndex].nextElementSibling.textContent; // Update title
-          document.getElementById('lightbox-description').textContent = currentGalleryImages[currentImageIndex].nextElementSibling.nextElementSibling.textContent; // Update description
+          const currentImg = currentGalleryImages[currentImageIndex];
+          document.getElementById('lightbox-img').src = currentImg.src;
+          
+          // Get title if it exists
+          const titleElement = currentImg.nextElementSibling;
+          const title = titleElement && titleElement.classList.contains('gallery-title') ? titleElement.textContent : '';
+          document.getElementById('lightbox-title').textContent = title;
+          
+          // Get description if it exists
+          const descriptionElement = titleElement ? titleElement.nextElementSibling : null;
+          const description = descriptionElement && descriptionElement.classList.contains('gallery-description') ? descriptionElement.textContent : '';
+          document.getElementById('lightbox-description').textContent = description;
         }
       }
     });
