@@ -414,54 +414,7 @@
       transition: filter 0.2s;
     }
     
-    /* Mobile swipe styles */
-    .gallery.mobile-swipe {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .gallery.mobile-swipe .gallery-item {
-      transition: opacity 0.3s ease;
-    }
-    
-    /* Swipe indicators */
-    .gallery.mobile-swipe::before,
-    .gallery.mobile-swipe::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 30px;
-      height: 30px;
-      background: rgba(180, 140, 174, 0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      opacity: 0.7;
-    }
-    
-    .gallery.mobile-swipe::before {
-      left: 10px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M15 18l-6-6 6-6' stroke='%23b48cae' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    
-    .gallery.mobile-swipe::after {
-      right: 10px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M9 18l6-6-6-6' stroke='%23b48cae' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    
-    @media (max-width: 600px) {
-      .gallery.mobile-swipe {
-        max-height: none;
-        overflow: visible;
-      }
-    }
+
   </style>
 </head>
 <body>
@@ -734,75 +687,55 @@
       }
     }
 
-    // Mobile swipe functionality for galleries
-    document.querySelectorAll('.gallery').forEach(gallery => {
-      let startX = 0;
-      let startY = 0;
-      let currentIndex = 0;
-      const items = gallery.querySelectorAll('.gallery-item');
+    // Mobile swipe functionality for lightbox only
+    let lightboxStartX = 0;
+    let lightboxStartY = 0;
+    
+    // Handle lightbox touch start
+    document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+      if (window.innerWidth > 600) return; // Only on mobile
+      lightboxStartX = e.touches[0].clientX;
+      lightboxStartY = e.touches[0].clientY;
+    });
+    
+    // Handle lightbox touch move
+    document.getElementById('lightbox').addEventListener('touchmove', function(e) {
+      if (window.innerWidth > 600) return; // Only on mobile
+      e.preventDefault(); // Prevent default scrolling
+    });
+    
+    // Handle lightbox touch end
+    document.getElementById('lightbox').addEventListener('touchend', function(e) {
+      if (window.innerWidth > 600) return; // Only on mobile
       
-      if (items.length <= 1) return; // No need for swipe if only one item
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = lightboxStartX - endX;
+      const diffY = lightboxStartY - endY;
       
-      // Show only one item at a time on mobile
-      function showItem(index) {
-        items.forEach((item, i) => {
-          if (i === index) {
-            item.style.display = 'flex';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      }
-      
-      // Initialize mobile view
-      function initMobileView() {
-        if (window.innerWidth <= 600) {
-          showItem(currentIndex);
-          gallery.classList.add('mobile-swipe');
+      // Check if it's a horizontal swipe (not vertical)
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          // Swipe left - next image
+          currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
         } else {
-          items.forEach(item => item.style.display = 'flex');
-          gallery.classList.remove('mobile-swipe');
+          // Swipe right - previous image
+          currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
         }
+        
+        const currentImg = currentGalleryImages[currentImageIndex];
+        document.getElementById('lightbox-img').src = currentImg.src;
+        
+        // Get title if it exists
+        const titleElement = currentImg.nextElementSibling;
+        const title = titleElement && titleElement.classList.contains('gallery-title') ? titleElement.textContent : '';
+        document.getElementById('lightbox-title').textContent = title;
+        
+        // Get description if it exists
+        const descriptionElement = titleElement ? titleElement.nextElementSibling : null;
+        const description = descriptionElement && descriptionElement.classList.contains('gallery-description') ? descriptionElement.textContent : '';
+        document.getElementById('lightbox-description').textContent = description;
       }
-      
-      // Handle touch start
-      gallery.addEventListener('touchstart', function(e) {
-        if (window.innerWidth > 600) return; // Only on mobile
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      });
-      
-      // Handle touch move
-      gallery.addEventListener('touchmove', function(e) {
-        if (window.innerWidth > 600) return; // Only on mobile
-        e.preventDefault(); // Prevent default scrolling
-      });
-      
-      // Handle touch end
-      gallery.addEventListener('touchend', function(e) {
-        if (window.innerWidth > 600) return; // Only on mobile
-        
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-        
-        // Check if it's a horizontal swipe (not vertical)
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-          if (diffX > 0) {
-            // Swipe left - next item
-            currentIndex = (currentIndex + 1) % items.length;
-          } else {
-            // Swipe right - previous item
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-          }
-          showItem(currentIndex);
-        }
-      });
-      
-      // Initialize on load and resize
-      initMobileView();
-      window.addEventListener('resize', initMobileView);
     });
   </script>
 </body>
