@@ -66,31 +66,34 @@ html {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 3.2em;
   margin: 0 0 12px 0;
   color: #b48cae;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-weight: 900;
+  letter-spacing: 2px;
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
+  text-shadow: 0 2px 4px rgba(180, 140, 174, 0.2);
 }
 
 .intro {
-  font-size: 1.5em;
+  font-size: 2.2em;
   color: #6d6d6d;
   margin: 12px 0 18px 0;
-  line-height: 1.7;
-  font-weight: bold;
+  line-height: 1.6;
+  font-weight: 800;
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
+  text-shadow: 0 1px 2px rgba(109, 109, 109, 0.1);
 }
 
 p {
-  font-size: 1.3em;
+  font-size: 1.5em;
   margin: 0 0 16px 0;
   color: #888;
+  font-weight: 600;
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
@@ -144,7 +147,7 @@ p {
 }
 
 .arrow-label {
-  font-size: 1.15em;
+  font-size: 1.3em;
   color: #b48cae;
   margin-top: 2px;
   font-family: 'DanaYadAlefAlefAlef-Normal', Arial, sans-serif;
@@ -153,7 +156,7 @@ p {
   text-align: center;
   white-space: normal;
   word-break: break-word;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .arrow-btn {
@@ -197,15 +200,15 @@ p {
 .product-section h2 {
   color: #b48cae;
   margin-bottom: 8px;
-  font-size: 2em;
-  font-weight: bold;
+  font-size: 2.2em;
+  font-weight: 900;
 }
 
 .product-section p {
   color: #888;
   margin-bottom: 18px;
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.4em;
+  font-weight: 700;
 }
 
 .gallery {
@@ -235,10 +238,10 @@ p {
 }
 
 .gallery-title {
-  font-size: 0.9em;
+  font-size: 1.1em;
   color: #b48cae;
   text-align: center;
-  font-weight: bold;
+  font-weight: 700;
   max-width: 120px;
   line-height: 1.2;
 }
@@ -409,10 +412,10 @@ h1, h2, .intro, p, .arrow-label {
     width: 180px;
   }
   h1 {
-    font-size: 2em;
+    font-size: 2.8em;
   }
   .intro, p, .phone {
-    font-size: 1em;
+    font-size: 1.8em;
   }
 }
 
@@ -440,6 +443,6 @@ h1, h2, .intro, p, .arrow-label {
     width: 120px;
   }
   h1 {
-    font-size: 2em;
+    font-size: 2.4em;
   }
 } 
